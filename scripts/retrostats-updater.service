@@ -1,0 +1,8 @@
+[Unit]
+Description=Update the statistics
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /var/retrostats-updater/updater.py RetroStatsBot PASSWORD
+User=retrostats-updater
+Group=retrostats-updater

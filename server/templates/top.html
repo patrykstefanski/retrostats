@@ -1,0 +1,109 @@
+{{define "title"}}Top {{if eq .Controller "toppoints"}}points{{else}}fleets{{end}}{{end}}
+{{define "content"}}
+<h2>Top {{if eq .Controller "toppoints"}}points{{else}}fleets{{end}}</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        {{- if eq .OrderBy "points"}}Points rank{{end -}}
+        {{- if eq .OrderBy "week-difference"}}Week diff. rank{{end -}}
+        {{- if eq .OrderBy "month-difference"}}Month diff. rank{{end -}}
+      </th>
+      <th>Name</th>
+      <th>Alliance</th>
+      <th><a href="?order-by=points&amp;direction={{if and (eq .OrderBy "points") (eq .Direction "desc")}}asc{{else}}desc{{end}}">Points (Rank)</a></th>
+      <th><a href="?order-by=week-difference&amp;direction={{if and (eq .OrderBy "week-difference") (eq .Direction "desc")}}asc{{else}}desc{{end}}">Week diff. (Rank)</a></th>
+      <th><a href="?order-by=month-difference&amp;direction={{if and (eq .OrderBy "month-difference") (eq .Direction "desc")}}asc{{else}}desc{{end}}">Month diff. (Rank)</a></th>
+    </tr>
+  </thead>
+  <tbody>
+{{range $index, $row := .Rows}}
+    <tr>
+      <td>
+        {{- if eq $.OrderBy "points" -}}
+          {{$row.Rank}}
+        {{- end -}}
+        {{- if eq $.OrderBy "week-difference" -}}
+          {{$row.WeekDifferenceRank}}
+         {{- end -}}
+        {{- if eq $.OrderBy "month-difference" -}}
+          {{$row.MonthDifferenceRank}}
+        {{- end -}}
+      </td>
+      <td><a href="/player/{{$row.Name}}">{{$row.Name}}</a></td>
+      <td>
+        {{- if $row.AllianceTag -}}
+          <a href="/alliance/{{$row.AllianceTag}}">{{$row.AllianceTag}}</a>
+        {{- end -}}
+      </td>
+      <td>{{$row.Points}} ({{$row.Rank}})</td>
+      <td>
+        {{- if $row.WeekDifference -}}
+          {{$row.WeekDifference}} ({{$row.WeekDifferenceRank}})
+        {{- else -}}
+          N/A
+        {{- end -}}
+      </td>
+      <td>
+        {{- if $row.MonthDifference -}}
+          {{$row.MonthDifference}} ({{$row.MonthDifferenceRank}})
+        {{- else -}}
+          N/A
+        {{- end -}}
+      </td>
+    </tr>
+{{end}}
+  </tbody>
+</table>
+<nav aria-label="Pagination">
+  <ul class="pagination">
+    {{if eq .Page 1}}
+    <li class="disabled">
+      <span aria-hidden="true">&laquo;</span>
+    </li>
+    {{else}}
+    <li>
+      <a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{sub .Page 1}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{end}}
+    {{if and (ge .Page .NumPages) (ge (sub .Page 4) 1)}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{sub .Page 4}}">{{sub .Page 4}}</a></li>
+    {{end}}
+    {{if and (ge .Page (sub .NumPages 1)) (ge (sub .Page 3) 1)}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{sub .Page 3}}">{{sub .Page 3}}</a></li>
+    {{end}}
+    {{if ge (sub .Page 2) 1}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{sub .Page 2}}">{{sub .Page 2}}</a></li>
+    {{end}}
+    {{if ge (sub .Page 1) 1}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{sub .Page 1}}">{{sub .Page 1}}</a></li>
+    {{end}}
+    <li class="active"><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{.Page}}">{{.Page}}</a></li>
+    {{if le (add .Page 1) .NumPages}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{add .Page 1}}">{{add .Page 1}}</a></li>
+    {{end}}
+    {{if le (add .Page 2) .NumPages}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{add .Page 2}}">{{add .Page 2}}</a></li>
+    {{end}}
+    {{if and (le .Page 2) (le (add .Page 3) .NumPages)}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{add .Page 3}}">{{add .Page 3}}</a></li>
+    {{end}}
+    {{if and (le .Page 1) (le (add .Page 4) .NumPages)}}
+    <li><a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{add .Page 4}}">{{add .Page 4}}</a></li>
+    {{end}}
+    {{if eq .Page .NumPages}}
+    <li class="disabled">
+      <span aria-hidden="true">&raquo;</span>
+    </li>
+    {{else}}
+    <li>
+      <a href="?order-by={{.OrderBy}}&amp;direction={{.Direction}}&amp;page={{add .Page 1}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {{end}}
+  </ul>
+</nav>
+{{end}}

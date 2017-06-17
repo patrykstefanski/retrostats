@@ -1,0 +1,13 @@
+[Unit]
+Description=Retro Stats WWW Server
+After=postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/retrostats-www
+ExecStart=/var/retrostats-www/server -config config.toml
+User=retrostats-www
+Group=retrostats-www
+
+[Install]
+WantedBy=multi-user.target

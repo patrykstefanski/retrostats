@@ -1,0 +1,9 @@
+[log]
+filename = "log"
+
+[database]
+data_source = "dbname=retrostats sslmode=disable"
+
+[server]
+host = "localhost"
+port = 1304

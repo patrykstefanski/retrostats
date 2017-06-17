@@ -1,0 +1,42 @@
+{{define "title"}}Alliance {{.Tag}}{{end}}
+{{define "page"}}alliance{{end}}
+{{define "content"}}
+    <div ng-controller="PointsCtrl" ng-init="pointsweek={{.points_points_week}}; pointsmonth={{.points_points_month}}; pointsalltime={{.points_points_all_time}}; fleetweek={{.points_fleet_week}}; fleetmonth={{.points_fleet_month}}; fleetalltime={{.points_fleet_all_time}}; researchweek={{.points_research_week}}; researchmonth={{.points_research_month}}; researchalltime={{.points_research_all_time}};">
+      <h2>
+        <span>{{.Tag}}'s points</span>
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group" role="group">
+            <label class="btn btn-default" ng-model="kind" uib-btn-radio="'points'">Points</label>
+            <label class="btn btn-default" ng-model="kind" uib-btn-radio="'fleet'">Fleet</label>
+            <label class="btn btn-default" ng-model="kind" uib-btn-radio="'research'">Research</label>
+          </div>
+          <div class="btn-group" role="group">
+            <label class="btn btn-default" ng-model="period" uib-btn-radio="'week'">Last week</label>
+            <label class="btn btn-default" ng-model="period" uib-btn-radio="'month'">Last month</label>
+            <label class="btn btn-default" ng-model="period" uib-btn-radio="'alltime'">All time</label>
+          </div>
+        </div>
+      </h2>
+      <hr>
+      <canvas class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride" chart-labels="labels" chart-options="options"></canvas>
+    </div>
+    <div ng-controller="RankingCtrl" ng-init="pointsweek={{.ranking_points_week}}; pointsmonth={{.ranking_points_month}}; pointsalltime={{.ranking_points_all_time}}; fleetweek={{.ranking_fleet_week}}; fleetmonth={{.ranking_fleet_month}}; fleetalltime={{.ranking_fleet_all_time}}; researchweek={{.ranking_research_week}}; researchmonth={{.ranking_research_month}}; researchalltime={{.ranking_research_all_time}};">
+      <h2>
+        <span>{{.Tag}}'s ranking</span>
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group" role="group">
+            <label class="btn btn-default" ng-model="kind" uib-btn-radio="'points'">Points</label>
+            <label class="btn btn-default" ng-model="kind" uib-btn-radio="'fleet'">Fleet</label>
+            <label class="btn btn-default" ng-model="kind" uib-btn-radio="'research'">Research</label>
+          </div>
+          <div class="btn-group" role="group">
+            <label class="btn btn-default" ng-model="period" uib-btn-radio="'week'">Last week</label>
+            <label class="btn btn-default" ng-model="period" uib-btn-radio="'month'">Last month</label>
+            <label class="btn btn-default" ng-model="period" uib-btn-radio="'alltime'">All time</label>
+          </div>
+        </div>
+      </h2>
+      <hr>
+      <canvas class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride" chart-labels="labels" chart-options="options"></canvas>
+    </div>
+{{end}}
